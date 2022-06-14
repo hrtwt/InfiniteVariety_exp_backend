@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:db/ijadataset.db
+    driverClassName: org.sqlite.JDBC
+  jpa:
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        dialect: jp.kusumotolab.InfiniteVarietyExp.sqlite.SQLiteDialect
