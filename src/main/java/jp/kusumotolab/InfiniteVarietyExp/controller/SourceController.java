@@ -16,7 +16,7 @@ public class SourceController {
   @Autowired SqliteService sqlite;
 
   @GetMapping
-  public List<SourceCode> getSource(@RequestParam(name = "id", required = true) int id) {
+  public SourceCode getSource(@RequestParam(name = "id", required = true) int id) {
     return sqlite.findSourceCodeById(id);
   }
 }

@@ -12,7 +12,7 @@ import jp.kusumotolab.InfiniteVarietyExp.data.SourceCode;
 public class SqliteService {
   @Autowired private JdbcTemplate jdbcTemplate;
 
-  public List<SourceCode> findSourceCodeById(final int id) {
+  public SourceCode findSourceCodeById(final int id) {
     final String sql1 = "select leftMethodID, rightMethodID from pairs where id=?";
     final Pairs pair =
         jdbcTemplate.queryForObject(sql1, new BeanPropertyRowMapper<>(Pairs.class), id);
@@ -24,7 +24,7 @@ public class SqliteService {
         jdbcTemplate.queryForObject(
             sql2, new BeanPropertyRowMapper<>(Rtext.class), pair.rightMethodID);
 
-    return Arrays.asList(new SourceCode(id, code1.rtext), new SourceCode(id, code2.rtext));
+    return new SourceCode(id, code1.rtext, pair.leftMethodID, code2.rtext, pair.rightMethodID);
   }
 }
 
