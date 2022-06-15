@@ -13,8 +13,15 @@ public class ResultController {
     return 7; // todo
   }
 
+  @GetMapping("/result")
+  public String getResult(
+      @RequestParam(name = "user", required = true) String user,
+      @RequestParam(name = "id", required = true) int id) {
+    return "o";
+  }
+
   @PostMapping("/result")
-  public void result(
+  public void PostResult(
       @RequestParam(name = "id", required = true) int id,
       @RequestParam(name = "user", required = true) String user) {}
 }
