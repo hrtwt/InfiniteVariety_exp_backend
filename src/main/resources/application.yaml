@@ -1,7 +1,8 @@
 spring:
   datasource:
-    url: jdbc:sqlite:${DATASET:db/ijadataset.db}
-    driverClassName: org.sqlite.JDBC
+    dataset:
+      url: jdbc:sqlite:${DATASET:db/ijadataset.db}
+      driverClassName: org.sqlite.JDBC
   jpa:
     properties:
       hibernate:
