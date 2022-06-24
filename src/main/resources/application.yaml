@@ -3,6 +3,9 @@ spring:
     dataset:
       url: jdbc:sqlite:${DATASET:db/ijadataset.db}
       driverClassName: org.sqlite.JDBC
+    results:
+      url: jdbc:sqlite:${RESULTS:db/results.db}
+      driverClassName: org.sqlite.JDBC
   jpa:
     properties:
       hibernate:
