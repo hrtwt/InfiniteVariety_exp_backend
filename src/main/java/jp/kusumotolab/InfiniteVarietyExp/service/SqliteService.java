@@ -1,12 +1,12 @@
 package jp.kusumotolab.InfiniteVarietyExp.service;
 
-import java.util.Arrays;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import jp.kusumotolab.InfiniteVarietyExp.data.SourceCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @Repository
 public class SqliteService {
@@ -28,23 +28,15 @@ public class SqliteService {
   }
 }
 
+@Getter
+@Setter
 class Pairs {
   int leftMethodID;
   int rightMethodID;
-
-  public void setLeftMethodID(final int leftMethodID) {
-    this.leftMethodID = leftMethodID;
-  }
-
-  public void setRightMethodID(final int rightMethodID) {
-    this.rightMethodID = rightMethodID;
-  }
 }
 
+@Getter
+@Setter
 class Rtext {
   String rtext;
-
-  public void setRtext(final String rtext) {
-    this.rtext = rtext;
-  }
 }

@@ -6,9 +6,13 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import lombok.Getter;
+import lombok.Setter;
 
 @Component
 @ConfigurationProperties(prefix = "spring.datasource.results")
+@Getter
+@Setter
 public class ResultsConfiguration {
   private String driverClassName;
   private String url;
@@ -21,21 +25,5 @@ public class ResultsConfiguration {
   @Bean(name = "resultsJdbc")
   public JdbcTemplate createJdbcTemplate(DataSource dataSource) {
     return new JdbcTemplate(dataSource);
-  }
-
-  public void setDriverClassName(final String driverClassName) {
-    this.driverClassName = driverClassName;
-  }
-
-  public void setUrl(final String url) {
-    this.url = url;
-  }
-
-  public String getDriverClassName() {
-    return driverClassName;
-  }
-
-  public String getUrl() {
-    return url;
   }
 }
