@@ -1,14 +1,23 @@
 spring:
   datasource:
     dataset:
-      url: jdbc:sqlite:${DATASET:db/ijadataset.db}
+      url: jdbc:sqlite:${DATASET:./db/ijadataset.db}
       driverClassName: org.sqlite.JDBC
+      initialization-mode: never
     results:
-      url: jdbc:sqlite:${RESULTS:db/results.db}
-      driverClassName: org.sqlite.JDBC
+      url: jdbc:h2:file:${RESULTS:./db/results}
+      driverClassName: org.h2.Driver
+      username: ${h2user:}
+      password: ${h2pass:}
+      schema: classpath:schema-results.sql
+      data:
+      initialization-mode: never
+
   jpa:
-    properties:
-      hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
-        dialect: jp.kusumotolab.InfiniteVarietyExp.sqlite.SQLiteDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+logging:
+  level:
+    root: INFO
