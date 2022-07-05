@@ -22,6 +22,6 @@ FROM openjdk:17-slim
 WORKDIR /backend
 
 COPY --from=builder /backend/build/libs/InfiniteVarietyExp*-SNAPSHOT.jar /backend/InfiniteVarietyExp-backend.jar
-COPY ./db/*.db /backend/db/
+# COPY ./db/*.db /backend/db/
 
 CMD ["java", "-jar", "InfiniteVarietyExp-backend.jar"]
