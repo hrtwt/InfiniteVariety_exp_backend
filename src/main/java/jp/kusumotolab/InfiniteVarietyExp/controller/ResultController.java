@@ -2,11 +2,14 @@ package jp.kusumotolab.InfiniteVarietyExp.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import jp.kusumotolab.InfiniteVarietyExp.entity.ResultEntity;
+import jp.kusumotolab.InfiniteVarietyExp.repository.PairIdRepository;
 import jp.kusumotolab.InfiniteVarietyExp.repository.ResultsRepository;
 
 @RestController
@@ -16,16 +19,36 @@ public class ResultController {
 
   @GetMapping("/next")
   public int next(@RequestParam(name = "user", required = true) String user) {
-    return 7; // todo
+    final var answerdId =
+        resultsRepository.findAllByUser(user).stream()
+            .mapToInt(ResultEntity::getPairId)
+            .max()
+            .orElse(0);
+    return PairIdRepository.getInstance()
+        .next(answerdId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
   }
 
-  @GetMapping("/result")
+  @GetMapping(
+      value = "/result",
+      params = {"user"})
+  public List<ResultEntity> getResult(@RequestParam(name = "user", required = true) String user) {
+    final var result = resultsRepository.findAllByUser(user);
+    if (result.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+    return result;
+  }
+
+  @GetMapping(
+      value = "/result",
+      params = {"user", "id"})
   public List<ResultEntity> getResult(
       @RequestParam(name = "user", required = true) String user,
       @RequestParam(name = "id", required = true) int pairId) {
     final var result = resultsRepository.findAllByPairIdAndUser(pairId, user);
     if (result.isEmpty()) {
-      // todo throw 404
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
     return result;
   }
