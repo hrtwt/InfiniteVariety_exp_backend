@@ -1,4 +1,4 @@
-package jp.kusumotolab.InfiniteVarietyExp.database;
+package jp.kusumotolab.InfiniteVarietyExp.config;
 
 import java.util.stream.Stream;
 import javax.persistence.EntityManagerFactory;
