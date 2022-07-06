@@ -15,7 +15,7 @@ public class SourceController {
   @Autowired DatasetRepository datasetRepository;
 
   @GetMapping
-  public SourceCode getSource(@RequestParam(name = "id", required = true) int id) {
+  public SourceCode getSource(@RequestParam(name = "id") int id) {
     return datasetRepository.findSourceCodeById(id);
   }
 }

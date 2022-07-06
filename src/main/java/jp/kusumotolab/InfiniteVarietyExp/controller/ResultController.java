@@ -18,7 +18,7 @@ public class ResultController {
   @Autowired private ResultsRepository resultsRepository;
 
   @GetMapping("/next")
-  public int next(@RequestParam(name = "user", required = true) String user) {
+  public int next(@RequestParam(name = "user") String user) {
     final var answerdId =
         resultsRepository.findAllByUser(user).stream()
             .mapToInt(ResultEntity::getPairId)
@@ -32,7 +32,7 @@ public class ResultController {
   @GetMapping(
       value = "/result",
       params = {"user"})
-  public List<ResultEntity> getResult(@RequestParam(name = "user", required = true) String user) {
+  public List<ResultEntity> getResult(@RequestParam(name = "user") String user) {
     final var result = resultsRepository.findAllByUser(user);
     if (result.isEmpty()) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -44,8 +44,8 @@ public class ResultController {
       value = "/result",
       params = {"user", "id"})
   public List<ResultEntity> getResult(
-      @RequestParam(name = "user", required = true) String user,
-      @RequestParam(name = "id", required = true) int pairId) {
+      @RequestParam(name = "user") String user,
+      @RequestParam(name = "id") int pairId) {
     final var result = resultsRepository.findAllByPairIdAndUser(pairId, user);
     if (result.isEmpty()) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
