@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
-import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
@@ -39,11 +38,19 @@ public class PairIdRepository {
     return Holder.pairIdRepository;
   }
 
-  public SortedSet<Integer> getPairIds() {
-    return pairIds;
-  }
-
   public Optional<Integer> next(final int nowId) {
     return Optional.ofNullable(pairIds.higher(nowId));
+  }
+
+  public Optional<Integer> indexOf(final int pairId) {
+    if (!pairIds.contains(pairId)) {
+      return Optional.empty();
+    }
+    final int index = pairIds.headSet(pairId).size();
+    return Optional.of(index);
+  }
+
+  public int size() {
+    return pairIds.size();
   }
 }
