@@ -54,7 +54,7 @@ public class ResultController {
   }
 
   @PostMapping("/result")
-  public void PostResult(
+  public void postResult(
       @RequestParam(name = "id") int pairId,
       @RequestParam(name = "user") String user,
       @RequestParam(name = "judge") String judge) {
