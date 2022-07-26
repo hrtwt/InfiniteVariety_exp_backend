@@ -33,7 +33,7 @@ public class ResultController {
       value = "/result",
       params = {"user"})
   public List<ResultEntity> getResult(@RequestParam(name = "user") String user) {
-    final var result = resultsRepository.findAllByUser(user);
+    final var result = resultsRepository.findLastUpdateAllByUser(user);
     if (result.isEmpty()) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }

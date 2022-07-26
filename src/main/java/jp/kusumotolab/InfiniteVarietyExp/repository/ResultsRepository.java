@@ -34,6 +34,7 @@ public interface ResultsRepository extends JpaRepository<ResultEntity, Long> {
                       results.pair_id = sub.pair_id
                   AND results.update_date < sub.update_date
               )
+              AND results.user_name = ?1
           ;
           """,
       nativeQuery = true)
