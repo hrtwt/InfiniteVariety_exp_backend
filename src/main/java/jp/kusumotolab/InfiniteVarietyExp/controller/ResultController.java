@@ -1,6 +1,7 @@
 package jp.kusumotolab.InfiniteVarietyExp.controller;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,34 +20,25 @@ public class ResultController {
 
   @GetMapping("/next")
   public int next(@RequestParam(name = "user") String user) {
-    final var answerdId =
+    final var answeredId =
         resultsRepository.findAllByUser(user).stream()
             .mapToInt(ResultEntity::getPairId)
             .max()
             .orElse(0);
     return PairIdRepository.getInstance()
-        .next(answerdId)
+        .next(answeredId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
   }
 
-  @GetMapping(
-      value = "/result",
-      params = {"user"})
-  public List<ResultEntity> getResult(@RequestParam(name = "user") String user) {
-    final var result = resultsRepository.findLastUpdateAllByUser(user);
-    if (result.isEmpty()) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-    return result;
-  }
-
-  @GetMapping(
-      value = "/result",
-      params = {"user", "id"})
+  @GetMapping(value = "/result")
   public List<ResultEntity> getResult(
       @RequestParam(name = "user") String user,
-      @RequestParam(name = "id") int pairId) {
-    final var result = resultsRepository.findAllByPairIdAndUser(pairId, user);
+      @RequestParam(name = "id") Optional<Integer> pairId) {
+    final var result =
+        pairId
+            .map(id -> resultsRepository.findAllByPairIdAndUser(id, user))
+            .orElseGet(() -> resultsRepository.findAllByUser(user));
+
     if (result.isEmpty()) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
