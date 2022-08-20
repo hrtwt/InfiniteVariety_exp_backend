@@ -15,7 +15,16 @@ public class SourceController {
   @Autowired DatasetRepository datasetRepository;
 
   @GetMapping
-  public SourceCode getSource(@RequestParam(name = "id") int id) {
-    return datasetRepository.findSourceCodeByPairId(id);
+  public SourceCode getSource(
+      @RequestParam(name = "id") int id,
+      @RequestParam(name = "deduplicate", required = false, defaultValue = "true")
+          boolean needDeduplicate) {
+    final SourceCode sourceCode = datasetRepository.findSourceCodeByPairId(id);
+
+    if (needDeduplicate) {
+      return sourceCode.deduplicatedSourceCode();
+    }
+
+    return sourceCode;
   }
 }
