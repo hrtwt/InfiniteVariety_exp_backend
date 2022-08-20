@@ -16,6 +16,6 @@ public class SourceController {
 
   @GetMapping
   public SourceCode getSource(@RequestParam(name = "id") int id) {
-    return datasetRepository.findSourceCodeById(id);
+    return datasetRepository.findSourceCodeByPairId(id);
   }
 }
