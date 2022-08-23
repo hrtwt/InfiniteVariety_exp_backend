@@ -16,7 +16,7 @@ public record SourceCode(int id, String code1, int code1Id, String code2, int co
 
   private String addIdToMethodName(final String method, final int id) {
     final String methodName = getMethodName(method);
-    return method.replace(methodName, methodName + id);
+    return method.replaceFirst(methodName, methodName + "_" + id);
   }
 
   private String getMethodName(final String code) {
